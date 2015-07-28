@@ -1,4 +1,4 @@
-angular.module('omnibooks.database', ['firebase'])
+angular.module('omnibooks.database', ['firebase', 'libServices'])
 .factory('fireBase', function($firebaseArray, $firebaseObject) {
     var myDataRef = new Firebase('https://blistering-inferno-5024.firebaseio.com/');
 
