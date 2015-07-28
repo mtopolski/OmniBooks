@@ -1,0 +1,21 @@
+
+<div class="padding market"> <!-- keeping market css styling for library -->
+  <img id='marketimg' src=" {{marketimg}} ">
+  <input id='marketsearch' type="text" ng-model="search" placeholder="Search by title/author/isbn">
+  <div id='bookshelf'>
+    <ul>
+      <li class='bookitem fx-fade-down fx-easing-bounce fx-speed-1000' ng-repeat="book in books | filter:search"> <!-- will need to update for library books-->
+      <div class="bookbg">
+        <a ng-click="findDetail(book)">
+          <img src=" {{book.img}} ">
+          <div class="booktext">
+            <p class="booktitle"> {{ book.title }} </p>
+            <p class="bookauthor"> {{ book.author}} </p>
+          </div>
+        </a>
+      </div>
+
+      </li>
+    </ul>
+  </div>
+</div>
