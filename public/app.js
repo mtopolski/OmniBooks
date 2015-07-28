@@ -5,6 +5,7 @@ angular.module('omnibooks', [
     'omnibooks.item',
     'omnibooks.market',
     'omnibooks.database',
+    'omnibooks.library',
     'omnibooks.auth',
     'omnibooks.mail',
     'firebase'
@@ -27,6 +28,11 @@ angular.module('omnibooks', [
         templateUrl: 'html/market.html',
         controller: 'MarketController'
       })
+      .state('library', {
+        url: '/library',
+        templateUrl: 'html/library.html',
+        controller: 'LibraryController'
+      })
       .state('books', {
         url: '/item/:itemId',
         templateUrl: 'html/item.html',
@@ -44,6 +50,9 @@ angular.module('omnibooks', [
       $scope.goMarket = function() {
         $location.path('/market');
       };
+      $scope.goLibrary = function() {
+        $location.path('/library');
+      }
       $scope.goItem = function() {
         $location.path('/item');
       };
