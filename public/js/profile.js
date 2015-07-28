@@ -8,7 +8,7 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
     var currentUser = auth.getUser();
       $scope.upload = function (files) {
         if(files){
-          console.log('up load file!!!')
+          console.log('up load file!!!');
         console.log(files);
         var file = files[0];
       }
@@ -19,13 +19,13 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
       if (title && url && author && isbn) {
         $scope.error = false;
       if (isbn.charAt(3) === '-') {
-        isbn = isbn.slice(0, 3) + isbn.slice(4)
-        console.log(isbn)
+        isbn = isbn.slice(0, 3) + isbn.slice(4);
+        console.log(isbn);
       }
 
       if (price.charAt(0) === '$') {
         price = price.slice(1);
-        console.log(price)
+        console.log(price);
       }
 
       fireBase.enterBook(currentOrg, currentUser.$id, title, url, author, isbn, price);
@@ -70,9 +70,9 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
       img: $scope.bookEdit.img,
       isbn: $scope.bookEdit.isbn,
       askingPrice: $scope.bookEdit.askingPrice
-    }
+    };
     fireBase.updateBook($scope.org, $scope.username, $scope.bookEdit.$id, update);
-  }
+  };
 }])
 .directive('modal', function() {
   return {
@@ -94,5 +94,4 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
       };
     }
   };
-})
-
+});
