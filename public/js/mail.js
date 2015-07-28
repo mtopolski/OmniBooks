@@ -5,7 +5,7 @@ angular.module('omnibooks.mail', [])
       $scope.sendMail = function() {
         var currentOrg = auth.getOrg();
         var currentUser = auth.getUser().$id;
-        var offerAmt = $scope.offer
+        var offerAmt = $scope.offer;
 
 
         // get current user's email
@@ -28,7 +28,7 @@ angular.module('omnibooks.mail', [])
         var userMsg = "";
         if ($scope.userMsg) {
           if ($scope.userMsg.length !== 0) {
-            userMsg = "\nHere's a message from the potential buyer: \n\n" + $scope.userMsg
+            userMsg = "\nHere's a message from the potential buyer: \n\n" + $scope.userMsg;
           }
         }
 
@@ -44,8 +44,8 @@ angular.module('omnibooks.mail', [])
             // html: "content",
             text: "You have received an offer on " + bookTitle + " for $" + offerAmt + "!\n" +
               "You posted this book for $" + bookAskingPrice + "\n" +
-              "You can respond to this offer, by emailing the buyer at " + emailFrom + ".\n"
-              + userMsg + 
+              "You can respond to this offer, by emailing the buyer at " + emailFrom + ".\n" +
+              userMsg + 
               "\n\nThanks for using OmniBooks!"
           });
 
@@ -59,7 +59,7 @@ angular.module('omnibooks.mail', [])
           error(function(data, status, headers, config) {
             console.log("error", data);
           });
-        })
+        });
       };
 
       $scope.modalMsgShown = false;
