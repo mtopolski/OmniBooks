@@ -158,4 +158,62 @@ angular.module('omnibooks.database', ['firebase'])
       autoLogin: autoLogin,
       logOut: logOut
     };
-  });
+  })
+.factory('libServices', function($firebaseArray, $firebaseObject) {
+
+  var libEnterBook = function(org, username, title, img, author, isbn) {
+    var bookDetails = {
+      title: title,
+      img: img,
+      author: author,
+      isbn: isbn,
+      createdBy: username
+    };
+    // push book details in org books library and user library bookshelf nodes
+    var newBookRef = myDataRef.child(org).child('libBooks').push(bookDetails);
+    var bookID = newBookRef.key();
+    myDataRef.child(org).child('users').child(username).child('libBookshelf').child(bookID).set(bookDetails);
+  };
+
+  var libDeleteBook = function(org, user, bookId) {
+    myDataRef.child(org).child('users').child(user).child('libBookshelf').child(bookId).remove();
+    myDataRef.child(org).child('libBooks').child(bookId).remove()
+  };
+
+  var libUpdateBook = function(org, user, id, bookNode) {
+    myDataRef.child(org).child('users').child(user).child('libBookshelf').child(id).update(bookNode);
+    myDataRef.child(org).child('libBooks').child(id).update(bookNode);
+  }
+
+  //get all library books in same org
+  var libGetOrgBook = function(org){
+    var ref = myDataRef.child(org).child('libBooks');
+    return $firebaseArray(ref);
+  };
+
+  //get one library book from a user, return object
+  var libGetUserBook = function(org, username, id, callback) {
+    var ref = myDataRef.child(org).child('libBooks').child(id);
+    ref.on('value', function(dataSnapshot) {
+      callback(dataSnapshot.val());
+      ref.off();
+    });
+    return $firebaseObject(ref);
+  };
+
+  // returns array of all library books belonging to a user
+  var libGetUserBookshelf = function(org, username) {
+    var ref = myDataRef.child(org).child('users').child(username).child('libBookshelf');
+    return $firebaseArray(ref);
+  };
+
+  // transaction operation
+  return {
+    libEnterBook: libEnterBook,
+    libDeleteBook: libDeleteBook,
+    libUpdateBook: libUpdateBook,
+    libGetOrgBook: libGetOrgBook,
+    libGetUserBook: libGetUserBook,
+    libGetUserBookshelf: libGetUserBookshelf
+  }
+})
