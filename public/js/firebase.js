@@ -1,6 +1,6 @@
 angular.module('omnibooks.database', ['firebase'])
 .factory('fireBase', function($firebaseArray, $firebaseObject) {
-    var myDataRef = new Firebase('https://shutorial.firebaseio.com/');
+    var myDataRef = new Firebase('https://blistering-inferno-5024.firebaseio.com/');
 
     var enterBook = function(org, username, title, img, author, isbn, price) {
       var bookDetails = {
