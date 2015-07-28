@@ -1,5 +1,5 @@
-angular.module('omnibooks.library', ['ngFx','ngAnimate']) //was omnibooks.market
-.controller('LibraryController', ['$state', '$scope', '$stateParams', 'fireBase', 'auth', //was MarketController
+angular.module('omnibooks.library', ['ngFx','ngAnimate'])
+.controller('LibraryController', ['$state', '$scope', '$stateParams', 'fireBase', 'auth',
     function($state, $scope, $stateParams, fireBase, auth) {
     var currentOrg = auth.getOrg();
     var currentUser = auth.getUser();
