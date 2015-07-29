@@ -32,6 +32,8 @@ angular.module('omnibooks.mail', [])
           }
         }
 
+        //prep email based on offer or checkout request
+
         // get seller's email
         var emailTo;
         var sellerUserEmail = fireBase.getUserEmail(currentOrg, bookOwner, function(data) {
