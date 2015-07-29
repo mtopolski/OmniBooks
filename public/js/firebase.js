@@ -23,7 +23,7 @@ angular.module('omnibooks.database', ['firebase'])
     };
 
     var updateBook = function(org, user, id, bookNode) {
-      myDataRef.child(org).child('users').child(user).child('bookshelf').child(id).update(bookNode);
+      myDataRef.child(org).child('users').child(gruser).child('bookshelf').child(id).update(bookNode);
       myDataRef.child(org).child('books').child(id).update(bookNode);
     };
 
@@ -160,6 +160,7 @@ angular.module('omnibooks.database', ['firebase'])
     };
   })
 .factory('libServices', function($firebaseArray, $firebaseObject) {
+  var myDataRef = new Firebase('https://blistering-inferno-5024.firebaseio.com/');
 
   var libEnterBook = function(org, username, title, img, author, isbn) {
     var bookDetails = {
@@ -177,13 +178,13 @@ angular.module('omnibooks.database', ['firebase'])
 
   var libDeleteBook = function(org, user, bookId) {
     myDataRef.child(org).child('users').child(user).child('libBookshelf').child(bookId).remove();
-    myDataRef.child(org).child('libBooks').child(bookId).remove()
+    myDataRef.child(org).child('libBooks').child(bookId).remove();
   };
 
   var libUpdateBook = function(org, user, id, bookNode) {
     myDataRef.child(org).child('users').child(user).child('libBookshelf').child(id).update(bookNode);
     myDataRef.child(org).child('libBooks').child(id).update(bookNode);
-  }
+  };
 
   //get all library books in same org
   var libGetOrgBook = function(org){
@@ -215,5 +216,5 @@ angular.module('omnibooks.database', ['firebase'])
     libGetOrgBook: libGetOrgBook,
     libGetUserBook: libGetUserBook,
     libGetUserBookshelf: libGetUserBookshelf
-  }
-})
+  };
+});
