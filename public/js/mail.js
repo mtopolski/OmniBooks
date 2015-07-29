@@ -32,14 +32,15 @@ angular.module('omnibooks.mail', [])
           }
         }
 
-        //prep email based on offer or checkout request
-
         // get seller's email
         var emailTo;
         var sellerUserEmail = fireBase.getUserEmail(currentOrg, bookOwner, function(data) {
           emailTo = data;
           // aggregate info for email
-          var msg = ({
+
+        //prep email based on offer or checkout request
+        var messages = {
+          offer: ({
             to: emailTo,
             from: emailFrom,
             subject: "Hey, " + bookOwner + " - You have received an offer on " + bookTitle + "!",
@@ -49,7 +50,19 @@ angular.module('omnibooks.mail', [])
               "You can respond to this offer, by emailing the buyer at " + emailFrom + ".\n" +
               userMsg + 
               "\n\nThanks for using OmniBooks!"
-          });
+          }),
+          checkout: ({
+            to: emailTo,
+            from: emailFrom,
+            subject: "Hey, " + bookOwner + " - You have received a checkout request on " + bookTitle + "!",
+            text: "You have received a checkout request on " + bookTitle + "!\n" +
+              "You can respond to this request by emailing the requester at " + emailFrom + ".\n" +
+              userMsg + 
+              "\n\nThanks for using OmniBooks!"
+          })
+        };
+        
+          var msg = offerAmt === undefined ? messages['checkout'] : messages['offer'];
 
           // post request to express routing
           $http.post('/sendMail', msg).
