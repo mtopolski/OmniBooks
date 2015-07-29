@@ -58,7 +58,7 @@ angular.module('omnibooks', [
       };
       $scope.goLibrary = function() {
         $location.path('/library');
-      }
+      };
       $scope.goItem = function() {
         $location.path('/item');
       };

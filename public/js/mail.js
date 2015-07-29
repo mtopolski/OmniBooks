@@ -61,8 +61,8 @@ angular.module('omnibooks.mail', [])
               "\n\nThanks for using OmniBooks!"
           })
         };
-        
-          var msg = offerAmt === undefined ? messages['checkout'] : messages['offer'];
+
+          var msg = offerAmt === undefined ? messages.checkout : messages.offer;
 
           // post request to express routing
           $http.post('/sendMail', msg).
