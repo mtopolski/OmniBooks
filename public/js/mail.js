@@ -28,7 +28,7 @@ angular.module('omnibooks.mail', [])
         var userMsg = "";
         if ($scope.userMsg) {
           if ($scope.userMsg.length !== 0) {
-            userMsg = "\nHere's a message from the potential buyer: \n\n" + $scope.userMsg;
+            userMsg = "\nHere's a message from the sender: \n\n" + $scope.userMsg;
           }
         }
 

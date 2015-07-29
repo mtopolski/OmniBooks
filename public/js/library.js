@@ -1,11 +1,14 @@
 angular.module('omnibooks.library', ['ngFx','ngAnimate'])
 .controller('LibraryController', ['$state', '$scope', '$stateParams', 'fireBase', 'auth', 'libServices',
-    function($state, $scope, $stateParams, fireBase, auth) {
+    function($state, $scope, $stateParams, fireBase, auth, libServices) {
     var currentOrg = auth.getOrg();
+    console.log(currentOrg);
     var currentUser = auth.getUser();
 
     if(currentOrg==='Purdue'){
+      console.log('am I real?');
       $scope.marketimg = '../images/purdue.jpg';
+      console.log($scope.marketimg);
     }else if(currentOrg==='Wellesley'){
       $scope.marketimg = '../images/wellesley.jpg';
     }else if(currentOrg==='Berkeley'){
@@ -21,6 +24,7 @@ angular.module('omnibooks.library', ['ngFx','ngAnimate'])
         });
       };
       currentOrg = auth.getOrg();
-      $scope.books = fireBase.getOrgBook(currentOrg); //DB FOLDER MIGHT NOT EVEN EXIST AND IF IT DO IT EMPTY AS FUUUCK
+      $scope.books = libServices.libGetOrgBook(currentOrg); //DB FOLDER MIGHT NOT EVEN EXIST AND IF IT DO IT EMPTY AS FUUUCK
+      // $scope.books = fireBase.getOrgBook(currentOrg); //this is the market db of books, just for testing
     }
   ]);

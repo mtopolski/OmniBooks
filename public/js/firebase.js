@@ -160,6 +160,7 @@ angular.module('omnibooks.database', ['firebase'])
     };
   })
 .factory('libServices', function($firebaseArray, $firebaseObject) {
+  var myDataRef = new Firebase('https://blistering-inferno-5024.firebaseio.com/');
 
   var libEnterBook = function(org, username, title, img, author, isbn) {
     var bookDetails = {
