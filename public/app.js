@@ -6,6 +6,7 @@ angular.module('omnibooks', [
     'omnibooks.market',
     'omnibooks.database',
     'omnibooks.library',
+    'omnibooks.checkout',
     'omnibooks.auth',
     'omnibooks.mail',
     'firebase'
@@ -36,7 +37,12 @@ angular.module('omnibooks', [
       .state('books', {
         url: '/item/:itemId',
         templateUrl: 'html/item.html',
-        controller: 'ItemController',
+        controller: 'ItemController'
+      })
+      .state('checkout', {
+        url: '/checkout/:itemId',
+        templateUrl: 'html/checkout.html',
+        controller: 'CheckoutController'
       });
   })
   .controller('IndexController', ['$scope', '$location', '$state', '$firebaseObject', 'fireBase',

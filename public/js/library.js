@@ -16,7 +16,7 @@ angular.module('omnibooks.library', ['ngFx','ngAnimate'])
 
       $scope.findDetail = function(book) {
         $stateParams.itemId = book.$id;
-        $state.go("books", {
+        $state.go("checkout", {
           itemId: book.$id
         });
       };
