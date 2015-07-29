@@ -36,6 +36,7 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
   };
 
   $scope.deleteBook = function(book) {
+    console.log('I got called!');
     console.log(book);
     fireBase.deleteBook($scope.org, $scope.username, book.$id);
   };

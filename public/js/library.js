@@ -1,5 +1,5 @@
 angular.module('omnibooks.library', ['ngFx','ngAnimate'])
-.controller('LibraryController', ['$state', '$scope', '$stateParams', 'fireBase', 'auth',
+.controller('LibraryController', ['$state', '$scope', '$stateParams', 'fireBase', 'auth', 'libServices',
     function($state, $scope, $stateParams, fireBase, auth) {
     var currentOrg = auth.getOrg();
     var currentUser = auth.getUser();
@@ -21,6 +21,6 @@ angular.module('omnibooks.library', ['ngFx','ngAnimate'])
         });
       };
       currentOrg = auth.getOrg();
-      $scope.books = fireBase.getOrgBook(currentOrg); //need to adjust to library books
+      $scope.books = fireBase.getOrgBook(currentOrg); //DB FOLDER MIGHT NOT EVEN EXIST AND IF IT DO IT EMPTY AS FUUUCK
     }
   ]);
