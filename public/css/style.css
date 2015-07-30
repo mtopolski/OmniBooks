@@ -116,9 +116,14 @@ footer a{
 .b-title{
   font-weight: bold;
   font-size: 30px;
+  text-align: center;
 }
 
-.s-title {
+.m-title {
+  text-align: center;
+}
+
+.s-title{
   margin-top: 30px;
   margin-left: 10px;
   margin-right: 40px;

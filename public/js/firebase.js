@@ -1,6 +1,6 @@
 angular.module('omnibooks.database', ['firebase'])
 .factory('fireBase', function($firebaseArray, $firebaseObject) {
-    var myDataRef = new Firebase('https://shutorial.firebaseio.com/');
+    var myDataRef = new Firebase('https://blistering-inferno-5024.firebaseio.com/');
 
     var enterBook = function(org, username, title, img, author, isbn, price) {
       var bookDetails = {
@@ -19,13 +19,13 @@ angular.module('omnibooks.database', ['firebase'])
 
     var deleteBook = function(org, user, bookId) {
       myDataRef.child(org).child('users').child(user).child('bookshelf').child(bookId).remove();
-      myDataRef.child(org).child('books').child(bookId).remove()
+      myDataRef.child(org).child('books').child(bookId).remove();
     };
 
     var updateBook = function(org, user, id, bookNode) {
       myDataRef.child(org).child('users').child(user).child('bookshelf').child(id).update(bookNode);
       myDataRef.child(org).child('books').child(id).update(bookNode);
-    }
+    };
 
     //get all books in same org
     var getOrgBook = function(org){
@@ -60,7 +60,7 @@ angular.module('omnibooks.database', ['firebase'])
       ref.on('value', function(dataSnapshot) {
         callback(dataSnapshot.val());
         ref.off();
-      })
+      });
       return $firebaseObject(ref);
     };
 
@@ -158,4 +158,108 @@ angular.module('omnibooks.database', ['firebase'])
       autoLogin: autoLogin,
       logOut: logOut
     };
-  });
+  })
+.factory('libServices', function($firebaseArray, $firebaseObject) {
+  var myDataRef = new Firebase('https://blistering-inferno-5024.firebaseio.com/');
+
+  var libEnterBook = function(org, username, title, img, author, isbn) {
+    var bookDetails = {
+      title: title,
+      img: img,
+      author: author,
+      isbn: isbn,
+      createdBy: username
+    };
+    // push book details in org books library and user library bookshelf nodes
+    var newBookRef = myDataRef.child(org).child('libBooks').push(bookDetails);
+    var bookID = newBookRef.key();
+    myDataRef.child(org).child('users').child(username).child('libBookshelf').child(bookID).set(bookDetails);
+
+    // enter book update check in
+  };
+
+  var libDeleteBook = function(org, user, bookId) {
+    myDataRef.child(org).child('users').child(user).child('libBookshelf').child(bookId).remove();
+    myDataRef.child(org).child('libBooks').child(bookId).remove()
+  };
+
+  var libUpdateBook = function(org, user, id, bookNode) {
+    myDataRef.child(org).child('users').child(user).child('libBookshelf').child(id).update(bookNode);
+    myDataRef.child(org).child('libBooks').child(id).update(bookNode);
+  }
+
+  //get all library books in same org
+  var libGetOrgBook = function(org){
+    var ref = myDataRef.child(org).child('libBooks');
+    return $firebaseArray(ref);
+  };
+
+  //get one library book from a user, return object
+  var libGetUserBook = function(org, username, id, callback) {
+    var ref = myDataRef.child(org).child('libBooks').child(id);
+    ref.on('value', function(dataSnapshot) {
+      callback(dataSnapshot.val());
+      ref.off();
+    });
+    return $firebaseObject(ref);
+  };
+
+  // returns array of all library books belonging to a user
+  var libGetUserBookshelf = function(org, username) {
+    var ref = myDataRef.child(org).child('users').child(username).child('libBookshelf');
+    return $firebaseArray(ref);
+  };
+
+  // reset checkout count
+  var libUpdateUserLibrary = function(org, username, checkout) {
+      var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio');
+      // set user check-in/check-out ratio
+      ref.set({
+        checkout: checkout
+      });
+    };
+
+  // action: "checkin"/"checkout"
+  var libUpdateUserLibraryRatio = function(org, username, action) {
+    if (typeof action !== 'string') {
+      console.error('libUpdateUserLibraryRatio requires "checkin"/"checkout" input');
+    };
+    var added = false;
+    var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio').child('checkout');
+
+    var act = function() {
+      added = true;
+      ref.transaction(function(checkout) {
+        if (action === 'checkin') {
+          return checkout + 1;
+        };
+        if (action === 'checkout') {
+          return checkout - 1;
+        };
+      });
+    }
+
+    ref.on('value', function() {
+      added || act();
+      // ref.off();
+    });
+  };
+
+  var libGetUserLibraryRatio = function(org, username) {
+    var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio').child('checkout');
+    return $firebaseObject(ref);
+  }
+
+  // potential user rating interface
+  return {
+    libEnterBook: libEnterBook,
+    libDeleteBook: libDeleteBook,
+    libUpdateBook: libUpdateBook,
+    libGetOrgBook: libGetOrgBook,
+    libGetUserBook: libGetUserBook,
+    libGetUserBookshelf: libGetUserBookshelf,
+    libUpdateUserLibrary: libUpdateUserLibrary,
+    libUpdateUserLibraryRatio: libUpdateUserLibraryRatio,
+    libGetUserLibraryRatio: libGetUserLibraryRatio
+  }
+})
