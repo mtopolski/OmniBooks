@@ -174,8 +174,6 @@ angular.module('omnibooks.database', ['firebase'])
     var newBookRef = myDataRef.child(org).child('libBooks').push(bookDetails);
     var bookID = newBookRef.key();
     myDataRef.child(org).child('users').child(username).child('libBookshelf').child(bookID).set(bookDetails);
-
-    // enter book update check in
   };
 
   var libDeleteBook = function(org, user, bookId) {
