@@ -219,6 +219,7 @@ angular.module('omnibooks.database', ['firebase'])
       });
     };
 
+  // action: "checkin"/"checkout"
   var libUpdateUserLibraryRatio = function(org, username, action) {
     if (typeof action !== 'string') {
       console.error('libUpdateUserLibraryRatio requires "checkin"/"checkout" input');
@@ -244,6 +245,11 @@ angular.module('omnibooks.database', ['firebase'])
     });
   };
 
+  var libGetUserLibraryRatio = function(org, username) {
+    var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio').child('checkout');
+    return $firebaseObject(ref);
+  }
+
   return {
     libEnterBook: libEnterBook,
     libDeleteBook: libDeleteBook,
@@ -252,6 +258,7 @@ angular.module('omnibooks.database', ['firebase'])
     libGetUserBook: libGetUserBook,
     libGetUserBookshelf: libGetUserBookshelf,
     libUpdateUserLibrary: libUpdateUserLibrary,
-    libUpdateUserLibraryRatio: libUpdateUserLibraryRatio
+    libUpdateUserLibraryRatio: libUpdateUserLibraryRatio,
+    libGetUserLibraryRatio: libGetUserLibraryRatio
   }
 })
