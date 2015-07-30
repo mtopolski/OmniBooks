@@ -241,7 +241,7 @@ angular.module('omnibooks.database', ['firebase'])
 
     ref.on('value', function() {
       added || act();
-      ref.off();
+      // ref.off();
     });
   };
 
@@ -250,6 +250,7 @@ angular.module('omnibooks.database', ['firebase'])
     return $firebaseObject(ref);
   }
 
+  // potential user rating interface
   return {
     libEnterBook: libEnterBook,
     libDeleteBook: libDeleteBook,
