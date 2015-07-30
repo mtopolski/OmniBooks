@@ -2,8 +2,8 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
 .run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 })
-.controller('ProfileController', ['$scope', '$stateParams', '$modal', '$state', 'auth', 'fireBase','Upload','$http',
-  function($scope, $stateParams, $modal, $state, auth, fireBase, Upload,$http) {
+.controller('ProfileController', ['$scope', '$stateParams', '$modal', '$state', 'auth', 'fireBase', 'libServices','Upload','$http',
+  function($scope, $stateParams, $modal, $state, auth, fireBase, libServices, Upload,$http) {
     var currentOrg = auth.getOrg();
     var currentUser = auth.getUser();
       $scope.upload = function (files) {
@@ -36,8 +36,6 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
   };
 
   $scope.deleteBook = function(book) {
-    console.log('I got called!');
-    console.log(book);
     fireBase.deleteBook($scope.org, $scope.username, book.$id);
   };
   $scope.username = auth.getUser().$id;
@@ -74,6 +72,7 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
     };
     fireBase.updateBook($scope.org, $scope.username, $scope.bookEdit.$id, update);
   };
+
 }])
 .directive('modal', function() {
   return {
