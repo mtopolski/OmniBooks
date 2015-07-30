@@ -73,13 +73,6 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
     fireBase.updateBook($scope.org, $scope.username, $scope.bookEdit.$id, update);
   };
 
-  // get user
-  $scope.checkout = function() {
-    // fireBase.updateUserLibrary(currentOrg, 'Ian', 0)
-    console.log("Get current org", fireBase.getOrgBook(currentOrg));
-    libServices.libUpdateUserLibraryRatio(currentOrg, 'Ian', 'checkout');
-  };
-
 }])
 .directive('modal', function() {
   return {
