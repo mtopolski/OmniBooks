@@ -143,21 +143,6 @@ angular.module('omnibooks.database', ['firebase'])
       myDataRef.unauth();
     };
 
-    var getUser = function(org, username) {
-      // var ref = myDataRef.child(org).child('users').child(username);
-      var ref = myDataRef.child(org).child('users');
-      return $firebaseObject(ref);
-    };
-
-    var updateUserLibrary = function(org, username) {
-      var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio');
-      // set user check-in/check-out ratio
-      ref.set({
-        checkIn: 0,
-        checkOut: 0
-      });
-    }
-
     return {
       enterBook: enterBook,
       deleteBook: deleteBook,
@@ -171,9 +156,7 @@ angular.module('omnibooks.database', ['firebase'])
       getUserOrg: getUserOrg,
       getUserEmail: getUserEmail,
       autoLogin: autoLogin,
-      logOut: logOut,
-      getUser: getUser,
-      updateUserLibrary: updateUserLibrary
+      logOut: logOut
     };
   })
 .factory('libServices', function($firebaseArray, $firebaseObject) {
@@ -191,6 +174,8 @@ angular.module('omnibooks.database', ['firebase'])
     var newBookRef = myDataRef.child(org).child('libBooks').push(bookDetails);
     var bookID = newBookRef.key();
     myDataRef.child(org).child('users').child(username).child('libBookshelf').child(bookID).set(bookDetails);
+
+    // enter book update check in
   };
 
   var libDeleteBook = function(org, user, bookId) {
@@ -225,14 +210,48 @@ angular.module('omnibooks.database', ['firebase'])
     return $firebaseArray(ref);
   };
 
-  // var libUpdate
-  //
+  // reset checkout count
+  var libUpdateUserLibrary = function(org, username, checkout) {
+      var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio');
+      // set user check-in/check-out ratio
+      ref.set({
+        checkout: checkout
+      });
+    };
+
+  var libUpdateUserLibraryRatio = function(org, username, action) {
+    if (typeof action !== 'string') {
+      console.error('libUpdateUserLibraryRatio requires "checkin"/"checkout" input');
+    };
+    var added = false;
+    var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio').child('checkout');
+
+    var act = function() {
+      added = true;
+      ref.transaction(function(checkout) {
+        if (action === 'checkin') {
+          return checkout + 1;
+        };
+        if (action === 'checkout') {
+          return checkout - 1;
+        };
+      });
+    }
+
+    ref.on('value', function() {
+      added || act();
+      ref.off();
+    });
+  };
+
   return {
     libEnterBook: libEnterBook,
     libDeleteBook: libDeleteBook,
     libUpdateBook: libUpdateBook,
     libGetOrgBook: libGetOrgBook,
     libGetUserBook: libGetUserBook,
-    libGetUserBookshelf: libGetUserBookshelf
+    libGetUserBookshelf: libGetUserBookshelf,
+    libUpdateUserLibrary: libUpdateUserLibrary,
+    libUpdateUserLibraryRatio: libUpdateUserLibraryRatio
   }
 })

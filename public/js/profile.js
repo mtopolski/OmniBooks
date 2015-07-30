@@ -74,13 +74,10 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
   };
 
   // get user
-  $scope.getUser = function() {
-    // console.log("User DB info", libServices.libGetUser($scope.org, $scope.username));
-    fireBase.updateUserLibrary($scope.org, 'Ian');
-    var rtnBooks = fireBase.getUser($scope.org);
-    // var rtnBooks = libServices.libGetUserBookshelf($scope.org, 'matt3');
-    console.log("User DB info", rtnBooks);
+  $scope.checkout = function() {
+    // fireBase.updateUserLibrary(currentOrg, 'Ian', 0)
     console.log("Get current org", fireBase.getOrgBook(currentOrg));
+    libServices.libUpdateUserLibraryRatio(currentOrg, 'Ian', 'checkout');
   };
 
 }])
