@@ -4,7 +4,7 @@
   "description": "buy/sell books",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower install"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.1",
     "express-handlebars": "^2.0.1",
+    "firebase": "2.2.3",
     "ng-file-upload": "^5.0.9",
     "nodemailer": "^1.4.0",
     "nodemailer-express-handlebars": "^1.0.0"
@@ -46,8 +47,5 @@
     "karma-phantomjs-launcher": "^0.2.0",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17"
-  },
-  "scripts": {
-    "postinstall": "bower install"
   }
 }

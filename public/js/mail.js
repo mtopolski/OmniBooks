@@ -58,11 +58,13 @@ angular.module('omnibooks.mail', [])
             text: "You have received a checkout request on " + bookTitle + "!\n" +
               "You can respond to this request by emailing the requester at " + emailFrom + ".\n" +
               userMsg + 
-              "\n\nThanks for using OmniBooks!"
+              "\n\nIf you do end up sharing this book, make sure to confirm you have done so " +
+              "with the following link- " + "127.0.0.1:8000/checkout/" + currentOrg + '/' + 
+              bookOwner + '/' + currentUser // + craft a sexy link to route to db query
           })
         };
 
-          var msg = offerAmt === undefined ? messages.checkout : messages.offer;
+          var msg = offerAmt === null ? messages.checkout : messages.offer;
 
           // post request to express routing
           $http.post('/sendMail', msg).
