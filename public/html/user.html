@@ -1,0 +1,33 @@
+<div class="padding">
+
+  <div id="greeting">
+    <!-- <h1 id="welcome">Welcome, {{username}}!</h1> -->
+    <h1>{{username}}'s Bookshelf</h1>
+    <h2>Rating: {{userRating}}</h2>
+  </div>
+
+  <div class="container" id="bookshelf">
+    <ul>
+      <h1>Market Bookshelf</h1>
+      <li class='bookitem' ng-repeat="book in books | filter:search">
+      <a ng-click="toggleEditModal(book)" class="link">
+        <img src=" {{book.img}} ">
+        <p class="booktitle">  {{ book.title }} </p>
+        <p class="bookauthor">  {{ book.author}} </p>
+      </a>
+    </ul>
+  </div>
+
+  <div class="container" id="bookshelf">
+    <ul>
+      <h1>Library Bookshelf</h1>
+      <li class='bookitem' ng-repeat="book in libBooks | filter:search">
+      <a ng-click="toggleEditModal(book)" class="link">
+        <img src=" {{book.img}} ">
+        <p class="booktitle">  {{ book.title }} </p>
+        <p class="bookauthor">  {{ book.author}} </p>
+      </a>
+    </ul>
+  </div>
+
+</div>

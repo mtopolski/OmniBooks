@@ -149,10 +149,36 @@ angular.module('omnibooks.database', ['firebase'])
       });
     };
 
+    // change password
+    var changePassword = function(authInfo, oldPassword, newPassword) {
+      myDataRef.changePassword({
+        email       : authInfo.userDetail.email,
+        oldPassword : oldPassword,
+        newPassword : newPassword
+      }, function(error) {
+        if (error === null) {
+          console.log("Password changed successfully");
+        } else {
+          console.log("Error changing password:", error);
+        }
+      });
+    }
+
     // log out
     var logOut = function () {
       myDataRef.unauth();
     };
+
+    var getUsersList = function(org, cbAction) {
+      var ref = myDataRef.child(org).child('users');
+      var allUsers = $firebaseArray(ref);
+      allUsers.$loaded().then(function () {
+        var users = allUsers;
+        for (var i = 0; i < users.length; i++) {
+          cbAction(users[i], i, users);
+        };
+      });
+    }
 
     return {
       enterBook: enterBook,
@@ -168,7 +194,8 @@ angular.module('omnibooks.database', ['firebase'])
       getUserOrg: getUserOrg,
       getUserEmail: getUserEmail,
       autoLogin: autoLogin,
-      logOut: logOut
+      logOut: logOut,
+      getUsersList: getUsersList
     };
   })
 .factory('libServices', function($firebaseArray, $firebaseObject) {
@@ -222,12 +249,12 @@ angular.module('omnibooks.database', ['firebase'])
 
   // reset checkout count
   var libUpdateUserLibrary = function(org, username, checkout) {
-      var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio');
-      // set user check-in/check-out ratio
-      ref.set({
-        checkout: checkout
-      });
-    };
+    var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio');
+    // set user check-in/check-out ratio
+    ref.update({
+      checkout: checkout
+    });
+  };
 
   // action: "checkin"/"checkout"
   var libUpdateUserLibraryRatio = function(org, username, action) {
@@ -261,6 +288,23 @@ angular.module('omnibooks.database', ['firebase'])
   }
 
   // potential user rating interface
+  var libUpdateUserRating = function(org, username, rating) {
+    // var ref = myDataRef.child(org).child('users').child(username).child('userRating');
+    var ref = myDataRef.child(org).child('users').child(username);
+    // set user check-in/check-out ratio
+    ref.update({
+      userRating: rating
+    });
+  };
+
+  var libGetUserRating = function(org, username) {
+    var ref = myDataRef.child(org).child('users').child(username).child('userRating');
+    ref.on('value', function(dataSnapshot) {
+      console.log(dataSnapshot.val());
+    });
+    return $firebaseObject(ref);
+  }
+
   return {
     libEnterBook: libEnterBook,
     libDeleteBook: libDeleteBook,
@@ -270,6 +314,8 @@ angular.module('omnibooks.database', ['firebase'])
     libGetUserBookshelf: libGetUserBookshelf,
     libUpdateUserLibrary: libUpdateUserLibrary,
     libUpdateUserLibraryRatio: libUpdateUserLibraryRatio,
-    libGetUserLibraryRatio: libGetUserLibraryRatio
+    libGetUserLibraryRatio: libGetUserLibraryRatio,
+    libUpdateUserRating: libUpdateUserRating,
+    libGetUserRating: libGetUserRating
   }
 })

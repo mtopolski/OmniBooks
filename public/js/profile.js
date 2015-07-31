@@ -110,7 +110,7 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
     };
     fireBase.updateBook($scope.org, $scope.username, $scope.bookEdit.$id, update);
   };
-
+  
 }])
 .directive('modal', function() {
   return {
