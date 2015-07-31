@@ -13,7 +13,7 @@
 <div ng-controller="MailController" style="margin-left: 50%">
     <div class="b-title"> {{book.title}} </div>
     <div class="m-title">by {{book.author}} (Author)</div>
-    <a ng-click="getRating()"><div class="b-title">Posted by {{book.createdBy}}</div></a>
+    <a ng-click="findUserDetail(book.createdBy)"><div class="b-title">Posted by {{book.createdBy}}</div></a>
     <p class="m-title">Seller's asking price: {{ book.askingPrice | currency }}</p>
   <div style="text-align: center"><button ng-click="toggleMsgModal()" class="btn btn-default">Send Offer</button></div>
   <modal show='modalMsgShown' width='750px'>

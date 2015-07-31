@@ -9,6 +9,7 @@ angular.module('omnibooks', [
     'omnibooks.checkout',
     'omnibooks.auth',
     'omnibooks.mail',
+    'omnibooks.user',
     'firebase'
   ])
   .config(function($stateProvider, $urlRouterProvider) {
@@ -44,8 +45,8 @@ angular.module('omnibooks', [
         templateUrl: 'html/checkout.html',
         controller: 'CheckoutController'
       })
-      .state('user', {
-        url: '/user/:userId',
+      .state('users', {
+        url: '/users/:userId',
         templateUrl: 'html/user.html',
         controller: 'UserController'
       })
