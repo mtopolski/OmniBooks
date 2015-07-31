@@ -74,7 +74,9 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
   };
 
   $scope.getRating = function() {
-    libServices.libUpdateUserRating($scope.org, $scope.username, 5);
+    libServices.libUpdateUserRating($scope.org, $scope.username, 3);
+    // get user rating
+    libServices.libGetUserRating($scope.org, $scope.username);
   };
 
 }])

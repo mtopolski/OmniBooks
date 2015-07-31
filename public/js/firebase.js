@@ -258,6 +258,14 @@ angular.module('omnibooks.database', ['firebase'])
     });
   };
 
+  var libGetUserRating = function(org, username) {
+    var ref = myDataRef.child(org).child('users').child(username).child('userRating');
+    ref.on('value', function(dataSnapshot) {
+      console.log(dataSnapshot.val());
+    });
+    return $firebaseObject(ref);
+  }
+
   return {
     libEnterBook: libEnterBook,
     libDeleteBook: libDeleteBook,
@@ -268,6 +276,7 @@ angular.module('omnibooks.database', ['firebase'])
     libUpdateUserLibrary: libUpdateUserLibrary,
     libUpdateUserLibraryRatio: libUpdateUserLibraryRatio,
     libGetUserLibraryRatio: libGetUserLibraryRatio,
-    libUpdateUserRating: libUpdateUserRating
+    libUpdateUserRating: libUpdateUserRating,
+    libGetUserRating: libGetUserRating
   }
 })
