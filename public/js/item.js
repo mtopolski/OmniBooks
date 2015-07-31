@@ -4,9 +4,9 @@ angular.module('omnibooks.item', [])
       var currentOrg = auth.getOrg();
       var currentUser = auth.getUser();
 
-      // var displayDetail = function(res) {    //I believe this function is purely for prices
-      //   $scope.prices = res.data.data;       //why can't books be like free and stuff man
-      // };
+      var displayDetail = function(res) {    //I believe this function is purely for prices
+        $scope.prices = res.data.data;       //why can't books be like free and stuff man
+      };
       $scope.itemId = $stateParams.itemId;
       $scope.book = fireBase.getUserBook(currentOrg, currentUser.$id, $scope.itemId, function(data) {
         bookAPI.getDetail(data.isbn, displayDetail);
