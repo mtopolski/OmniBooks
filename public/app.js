@@ -43,7 +43,12 @@ angular.module('omnibooks', [
         url: '/checkout/:itemId',
         templateUrl: 'html/checkout.html',
         controller: 'CheckoutController'
-      });
+      })
+      .state('user', {
+        url: '/user/:userId',
+        templateUrl: 'html/user.html',
+        controller: 'UserController'
+      })
   })
   .controller('IndexController', ['$scope', '$location', '$state', '$firebaseObject', 'fireBase',
     function($scope, $location, $state, $firebaseObject, fireBase) {
