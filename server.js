@@ -54,9 +54,11 @@ var libUpdateUserLibraryRatio = function(org, username, action) {
    added = true;
    ref.transaction(function(checkout) {
      if (action === 'checkin') {
+       console.log(username + "'s new checkout after checkin total is " + (checkout + 1))
        return checkout + 1;
      };
      if (action === 'checkout') {
+       console.log(username + "'s new checkout after checkout total is " + (checkout - 1))
        return checkout - 1;
      };
    });

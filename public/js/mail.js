@@ -1,8 +1,8 @@
 angular.module('omnibooks.mail', [])
-  .controller('MailController', ['$scope', '$http', '$modal', 'fireBase', 'auth',
-    function($scope, $http, $modal, fireBase, auth) {
+  .controller('MailController', ['$scope', '$http', '$modal', 'fireBase', 'auth', 'libServices',
+    function($scope, $http, $modal, fireBase, auth, libServices) {
 
-      $scope.sendMail = function() {
+      $scope.sendMail = function(checkout) {
         var currentOrg = auth.getOrg();
         var currentUser = auth.getUser().$id;
         var offerAmt = $scope.offer;
@@ -18,11 +18,19 @@ angular.module('omnibooks.mail', [])
         var bookOwner;
         var bookTitle;
         var bookAskingPrice;
-        var bookInfo = fireBase.getUserBook(currentOrg, currentUser, $scope.itemId, function(data) {
-          bookOwner = data.createdBy;
-          bookTitle = data.title;
-          bookAskingPrice = data.askingPrice;
-        });
+        if (!checkout) {
+          var bookInfo = fireBase.getUserBook(currentOrg, currentUser, $scope.itemId, function(data) {
+            bookOwner = data.createdBy;
+            bookTitle = data.title;
+            bookAskingPrice = data.askingPrice;
+          });
+        } else {
+          var bookInfo = libServices.libGetUserBook(currentOrg, currentUser, $scope.itemId, function(data) {
+            bookOwner = data.createdBy;
+            bookTitle = data.title;
+            bookAskingPrice = data.askingPrice;
+          });
+        }
 
         // addl user message
         var userMsg = "";
@@ -63,8 +71,13 @@ angular.module('omnibooks.mail', [])
               bookOwner + '/' + currentUser // + craft a sexy link to route to db query
           })
         };
+          console.log(typeof offerAmt);
+          var check = false;
+          if (offerAmt === undefined || offerAmt === '') {
+            check = true;
+          }
 
-          var msg = offerAmt === null ? messages.checkout : messages.offer;
+          var msg = check ? messages.checkout : messages.offer;
 
           // post request to express routing
           $http.post('/sendMail', msg).
