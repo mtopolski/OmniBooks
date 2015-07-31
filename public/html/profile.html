@@ -6,6 +6,7 @@
   </div>
 
   <div class="container" id="bookshelf">
+    <h1>Market books</h1>
     <ul>
       <li class='bookitem' ng-repeat="book in books | filter:search">
       <a ng-click="toggleEditModal(book)" class="link">
@@ -25,8 +26,10 @@
       </li>
     </ul>
   </div>
+  <br>
   <div style="float:left">
   <div class="container" id="bookshelf">
+    <h1>Library books</h1>
     <ul>
       <li class='bookitem' ng-repeat="book in libBooks | filter:search">
       <a ng-click="toggleEditModal(book)" class="link">
