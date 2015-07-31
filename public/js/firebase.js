@@ -49,6 +49,17 @@ angular.module('omnibooks.database', ['firebase'])
       return $firebaseArray(ref);
     };
 
+    var getUsersList = function(org, cbAction) {
+     var ref = myDataRef.child(org).child('users');
+     var allUsers = $firebaseArray(ref);
+     allUsers.$loaded().then(function () {
+       var users = allUsers;
+       for (var i = 0; i < users.length; i++) {
+         cbAction(users[i], i, users);
+       };
+     });
+   }
+
     //get user detail info, return object
     var getUserInfo = function(org, username) {
       return $firebaseObject(myDataRef.child(org).child('users').child(username));
@@ -174,6 +185,7 @@ angular.module('omnibooks.database', ['firebase'])
       deleteBook: deleteBook,
       updateBook: updateBook,
       getOrgBook: getOrgBook,
+      getUsersList: getUsersList,
       getUserBook: getUserBook,
       getUserBookshelf: getUserBookshelf,
       getUserInfo: getUserInfo,

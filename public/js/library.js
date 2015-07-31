@@ -5,6 +5,12 @@ angular.module('omnibooks.library', ['ngFx','ngAnimate'])
     var currentUser = auth.getUser();
     var libraryRatio = libServices.libGetUserLibraryRatio(currentOrg, currentUser.$id)
 
+    $scope.allUsers = {};
+    
+    fireBase.getUsersList(currentOrg, function(user, index, users) {
+      $scope.allUsers[user.$id] = {id: user.$id, ratio: user.libraryRatio.checkout};
+    });
+
     if(currentOrg==='Purdue'){
       $scope.marketimg = '../images/purdue.jpg';
     }else if(currentOrg==='Wellesley'){
