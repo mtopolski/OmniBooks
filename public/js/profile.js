@@ -6,6 +6,12 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
   function($scope, $stateParams, $modal, $state, auth, fireBase, libServices, Upload, $http, libServices) {
     var currentOrg = auth.getOrg();
     var currentUser = auth.getUser();
+
+    var karma = libServices.libGetUserLibraryRatio(currentOrg, currentUser.$id);
+    $scope.karma = function() {
+        return karma.$value;
+    };
+
       $scope.upload = function (files) {
         if(files){
           console.log('up load file!!!');
