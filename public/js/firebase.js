@@ -210,12 +210,12 @@ angular.module('omnibooks.database', ['firebase'])
 
   // reset checkout count
   var libUpdateUserLibrary = function(org, username, checkout) {
-      var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio');
-      // set user check-in/check-out ratio
-      ref.set({
-        checkout: checkout
-      });
-    };
+    var ref = myDataRef.child(org).child('users').child(username).child('libraryRatio');
+    // set user check-in/check-out ratio
+    ref.update({
+      checkout: checkout
+    });
+  };
 
   // action: "checkin"/"checkout"
   var libUpdateUserLibraryRatio = function(org, username, action) {
@@ -249,6 +249,15 @@ angular.module('omnibooks.database', ['firebase'])
   }
 
   // potential user rating interface
+  var libUpdateUserRating = function(org, username, rating) {
+    // var ref = myDataRef.child(org).child('users').child(username).child('userRating');
+    var ref = myDataRef.child(org).child('users').child(username);
+    // set user check-in/check-out ratio
+    ref.update({
+      userRating: rating
+    });
+  };
+
   return {
     libEnterBook: libEnterBook,
     libDeleteBook: libDeleteBook,
@@ -258,6 +267,7 @@ angular.module('omnibooks.database', ['firebase'])
     libGetUserBookshelf: libGetUserBookshelf,
     libUpdateUserLibrary: libUpdateUserLibrary,
     libUpdateUserLibraryRatio: libUpdateUserLibraryRatio,
-    libGetUserLibraryRatio: libGetUserLibraryRatio
+    libGetUserLibraryRatio: libGetUserLibraryRatio,
+    libUpdateUserRating: libUpdateUserRating
   }
 })
