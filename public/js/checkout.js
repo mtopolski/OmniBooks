@@ -1,6 +1,6 @@
 angular.module('omnibooks.checkout', [])
-  .controller('CheckoutController', ['$scope', '$stateParams', '$modal', 'fireBase', 'bookAPI', 'auth',
-    function($scope, $stateParams, $modal, fireBase, bookAPI, auth) {
+  .controller('CheckoutController', ['$scope', '$stateParams', '$modal', 'fireBase', 'bookAPI', 'auth', 'libServices',
+    function($scope, $stateParams, $modal, fireBase, bookAPI, auth, libServices) {
       var currentOrg = auth.getOrg();
       var currentUser = auth.getUser();
 
@@ -8,15 +8,20 @@ angular.module('omnibooks.checkout', [])
         $scope.prices = res.data.data;
       };
       $scope.itemId = $stateParams.itemId;
-      $scope.book = fireBase.getUserBook(currentOrg, currentUser.$id, $scope.itemId, function(data) {
+      $scope.book = libServices.libGetUserBook(currentOrg, currentUser.$id, $scope.itemId, function(data) {
         bookAPI.getDetail(data.isbn, displayDetail);
       });
 
-      $scope.modalShown = false;
-      $scope.toggleModal = function() {
+      $scope.modalMsgShown = false;
+      $scope.toggleMsgModal = function() {
+        console.log('is this running');
         if (!$scope.error) {
-          $scope.modalShown = !$scope.modalShown;
+          $scope.modalMsgShown = !$scope.modalMsgShown;
+          console.log($scope.modalMsgShown);
         }
+      };
+      $scope.dafuq = function() {
+        $scope.modalMsgShown = $scope.modalMsgShown ? false : true;
       };
     }
   ])

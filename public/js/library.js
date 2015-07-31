@@ -2,13 +2,11 @@ angular.module('omnibooks.library', ['ngFx','ngAnimate'])
 .controller('LibraryController', ['$state', '$scope', '$stateParams', 'fireBase', 'auth', 'libServices',
     function($state, $scope, $stateParams, fireBase, auth, libServices) {
     var currentOrg = auth.getOrg();
-    console.log(currentOrg);
     var currentUser = auth.getUser();
+    var libraryRatio = libServices.libGetUserLibraryRatio(currentOrg, currentUser.$id)
 
     if(currentOrg==='Purdue'){
-      console.log('am I real?');
       $scope.marketimg = '../images/purdue.jpg';
-      console.log($scope.marketimg);
     }else if(currentOrg==='Wellesley'){
       $scope.marketimg = '../images/wellesley.jpg';
     }else if(currentOrg==='Berkeley'){
@@ -18,13 +16,16 @@ angular.module('omnibooks.library', ['ngFx','ngAnimate'])
     }
 
       $scope.findDetail = function(book) {
-        $stateParams.itemId = book.$id;
-        $state.go("checkout", {
-          itemId: book.$id
-        });
+        if (libraryRatio.$value < -1) {
+          alert("You need to give more books before you can check any out");
+        } else {
+          $stateParams.itemId = book.$id;
+          $state.go("checkout", {
+            itemId: book.$id
+          });
+        }
       };
       currentOrg = auth.getOrg();
-      $scope.books = libServices.libGetOrgBook(currentOrg); //DB FOLDER MIGHT NOT EVEN EXIST AND IF IT DO IT EMPTY AS FUUUCK
-      // $scope.books = fireBase.getOrgBook(currentOrg); //this is the market db of books, just for testing
+      $scope.books = libServices.libGetOrgBook(currentOrg); //This folder exists, and is empty, as we have no feature to add books to the library yet.
     }
   ]);
