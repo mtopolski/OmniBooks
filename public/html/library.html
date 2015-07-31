@@ -22,7 +22,7 @@
   </div><div style="width: 30%; display: inline-block; vertical-align: top">
     <h1 style="margin-top: 30px">Library Giveaway Leaderboard:</h1>
     <ul> 
-      <li ng-repeat="user in allUsers" style="float:none;">
+      <li ng-repeat="user in allUsers | orderBy: '-ratio'" style="float:none;">
       <div style="margin-bottom:10px;">
       <span style="display:inline-block; width:38%;">{{user.id}}</span><span style="text-align: right; display: inline-block;">{{user.ratio}}<span>
       </div>
