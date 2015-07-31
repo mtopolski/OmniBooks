@@ -77,6 +77,8 @@ angular.module('omnibooks.profile', ['ui.bootstrap','ngFileUpload','xeditable'])
     libServices.libUpdateUserRating($scope.org, $scope.username, 3);
     // get user rating
     libServices.libGetUserRating($scope.org, $scope.username);
+    var userObj = fireBase.getUserInfo($scope.org, $scope.username);
+    console.log("Get user id: ", userObj.$id);
   };
 
 }])
