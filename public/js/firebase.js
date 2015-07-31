@@ -138,10 +138,36 @@ angular.module('omnibooks.database', ['firebase'])
       });
     };
 
+    // change password
+    var changePassword = function(authInfo, oldPassword, newPassword) {
+      myDataRef.changePassword({
+        email       : authInfo.userDetail.email,
+        oldPassword : oldPassword,
+        newPassword : newPassword
+      }, function(error) {
+        if (error === null) {
+          console.log("Password changed successfully");
+        } else {
+          console.log("Error changing password:", error);
+        }
+      });
+    }
+
     // log out
     var logOut = function () {
       myDataRef.unauth();
     };
+
+    var getUsersList = function(org, cbAction) {
+      var ref = myDataRef.child(org).child('users');
+      var allUsers = $firebaseArray(ref);
+      allUsers.$loaded().then(function () {
+        var users = allUsers;
+        for (var i = 0; i < users.length; i++) {
+          cbAction(users[i], i, users);
+        };
+      });
+    }
 
     return {
       enterBook: enterBook,
@@ -156,7 +182,8 @@ angular.module('omnibooks.database', ['firebase'])
       getUserOrg: getUserOrg,
       getUserEmail: getUserEmail,
       autoLogin: autoLogin,
-      logOut: logOut
+      logOut: logOut,
+      getUsersList: getUsersList
     };
   })
 .factory('libServices', function($firebaseArray, $firebaseObject) {
