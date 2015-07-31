@@ -465,3 +465,19 @@ h1 {
   font-weight: bold;
   font-family: 'arial', 'sans-serif';
 }
+
+/* user rating in user.html */
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
