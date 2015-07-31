@@ -1,20 +1,31 @@
 
 <div class="padding market"> <!-- keeping market css styling for library -->
-  <img id='marketimg' src=" {{marketimg}} ">
-  <input id='marketsearch' type="text" ng-model="search" placeholder="Search by title/author/isbn">
-  <div id='bookshelf'>
-    <ul>
-      <li class='bookitem fx-fade-down fx-easing-bounce fx-speed-1000' ng-repeat="book in books | filter:search"> <!-- will need to update for library books-->
-      <div class="bookbg">
-        <a ng-click="findDetail(book)">
-          <img src=" {{book.img}} ">
-          <div class="booktext">
-            <p class="booktitle"> {{ book.title }} </p>
-            <p class="bookauthor"> {{ book.author}} </p>
-          </div>
-        </a>
-      </div>
+  <img id='marketimg' src=" {{marketimg}} " style="position: absolute;">
+  <div style="width: 70%; display: inline-block; position: relative; margin-top: 88px; vertical-align: top">
+    <input id='marketsearch' type="text" ng-model="search" placeholder="Search by title/author/isbn" style="margin-left: 71px; margin-bottom: 10px">
+    <div id='bookshelf'>
+      <ul>
+        <li class='bookitem fx-fade-down fx-easing-bounce fx-speed-1000' ng-repeat="book in books | filter:search"> <!-- will need to update for library books-->
+        <div class="bookbg">
+          <a ng-click="findDetail(book)">
+            <img src=" {{book.img}} ">
+            <div class="booktext">
+              <p class="booktitle"> {{ book.title }} </p>
+              <p class="bookauthor"> {{ book.author }} </p>
+            </div>
+          </a>
+        </div>
 
+        </li>
+      </ul>
+    </div>
+  </div><div style="width: 30%; display: inline-block; vertical-align: top">
+    <p style="margin-top: 30px">Library Giveaway Leaderboard:</p>
+    <ul> 
+      <li ng-repeat="user in allUsers" style="clear: both">
+      <div>
+      <p>{{user.id}}</p>      <p style="text-align: right; display: inline-block;">{{user.ratio}}<p> <br><br>
+      </div>
       </li>
     </ul>
   </div>
