@@ -67,7 +67,7 @@ angular.module('omnibooks.mail', [])
               "You can respond to this request by emailing the requester at " + emailFrom + ".\n" +
               userMsg + 
               "\n\nIf you do end up sharing this book, make sure to confirm you have done so " +
-              "with the following link- " + "127.0.0.1:8000/checkout/" + currentOrg + '/' + 
+              "with the following link- " + "http://tectonicbooks.herokuapp.com/checkout/" + currentOrg + '/' + 
               bookOwner + '/' + currentUser // + craft a sexy link to route to db query
           })
         };
