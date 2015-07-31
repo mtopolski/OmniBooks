@@ -6,9 +6,7 @@ angular.module('omnibooks.library', ['ngFx','ngAnimate'])
     var libraryRatio = libServices.libGetUserLibraryRatio(currentOrg, currentUser.$id)
 
     if(currentOrg==='Purdue'){
-      console.log('am I real?');
       $scope.marketimg = '../images/purdue.jpg';
-      console.log($scope.marketimg);
     }else if(currentOrg==='Wellesley'){
       $scope.marketimg = '../images/wellesley.jpg';
     }else if(currentOrg==='Berkeley'){
