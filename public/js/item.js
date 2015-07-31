@@ -19,18 +19,6 @@ angular.module('omnibooks.item', [])
         }
       };
 
-      $scope.getRating = function(user) {
-        // libServices.libUpdateUserRating(currentOrg, 'Ian', 4);
-        libServices.libGetUserRating(currentOrg, user);         // will return null if no rating
-        var userInfo = fireBase.getUserInfo(currentOrg, user);
-        console.log("userInfo", userInfo);
-        var userArray = [];
-        fireBase.getUsersList(currentOrg, function(val) {
-          userArray.push(val);
-          console.log("from get users", val.$id);
-        });
-      };
-
       $scope.findUserDetail = function(user) {
         // obatin user id
         // libServices.libGetUserRating
