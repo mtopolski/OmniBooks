@@ -20,10 +20,7 @@ angular.module('omnibooks.item', [])
       };
 
       $scope.findUserDetail = function(user) {
-        // obatin user id
-        // libServices.libGetUserRating
         var userInfo = fireBase.getUserInfo(currentOrg, user);
-        // console.log("userInfo", userInfo);
         $stateParams.userId = userInfo.$id;
         $state.go("users", {
           userId: userInfo.$id
