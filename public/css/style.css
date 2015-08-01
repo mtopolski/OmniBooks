@@ -467,7 +467,8 @@ h1 {
 }
 
 /* user rating in user.html */
-.rating {
+/*.rating {
+  margin: auto;
   unicode-bidi: bidi-override;
   direction: rtl;
 }
@@ -480,4 +481,24 @@ h1 {
 .rating > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
+}*/
+
+.rating {
+    color: #a9a9a9;
+    margin: 0;
+    padding: 0;
+}
+ul.rating {
+    display: inline-block;
+}
+.rating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+.rating .filled {
+    color: red;
 }
